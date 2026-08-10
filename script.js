@@ -14,7 +14,21 @@ function Gameboard() {
 
     console.log(getBoard())
 
-    return { getBoard };
+    const dropMark = function (row, column, playerMark) {
+
+        if (board[row][column].getValue() === 0) {
+            board[row][column].addMark(playerMark)
+        }
+    }
+
+    const printBoard = () => {
+        const boardWithCellValues = board.map((row) =>
+            row.map((cell) => cell.getValue())
+        );
+        console.log(boardWithCellValues);
+    };
+
+    return { getBoard, dropMark, printBoard };
 }
 
 function Cell() {
@@ -24,10 +38,11 @@ function Cell() {
 
     const addMark = (playerMark) => value = playerMark;
 
-    return { getValue, addMark }
+    return { getValue, addMark, value }
 }
 
-Gameboard();
+const game = Gameboard();
+
 
 function GameController() {
     const playerOneName = "Player One";
@@ -38,11 +53,11 @@ function GameController() {
     const players = [
         {
             name: playerOneName,
-            token: 1,
+            mark: 1,
         },
         {
             name: playerTwoName,
-            token: 2,
+            mark: 2,
         },
     ];
 
@@ -56,9 +71,9 @@ function GameController() {
 
     const getActivePlayer = () => activePlayer;
 
-
-
     const playRound = function () {
 
     }
+
+
 }
