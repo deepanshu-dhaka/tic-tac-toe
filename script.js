@@ -14,7 +14,7 @@ function Gameboard() {
 
     console.log(getBoard())
 
-
+    return { getBoard };
 }
 
 function Cell() {
@@ -28,3 +28,37 @@ function Cell() {
 }
 
 Gameboard();
+
+function GameController() {
+    const playerOneName = "Player One";
+    const playerTwoName = "Player Two";
+
+    const game = Gameboard();
+
+    const players = [
+        {
+            name: playerOneName,
+            token: 1,
+        },
+        {
+            name: playerTwoName,
+            token: 2,
+        },
+    ];
+
+    let activePlayer = players[0];
+
+    const switchPlayer = function () {
+        if (activePlayer == players[0]) {
+            activePlayer = players[1];
+        } else activePlayer = players[0];
+    }
+
+    const getActivePlayer = () => activePlayer;
+
+
+
+    const playRound = function () {
+
+    }
+}
