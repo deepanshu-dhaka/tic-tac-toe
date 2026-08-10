@@ -38,7 +38,7 @@ function Cell() {
 
     const addMark = (playerMark) => value = playerMark;
 
-    return { getValue, addMark, value }
+    return { getValue, addMark }
 }
 
 const game = Gameboard();
