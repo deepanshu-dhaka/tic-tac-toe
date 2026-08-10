@@ -9,11 +9,13 @@ function Gameboard() {
             board[i].push(Cell());
         }
     }
-    console.log(board)
+
+    const getBoard = () => board;
+
+    console.log(getBoard())
 
 
 }
-
 
 function Cell() {
     let value = 0;
