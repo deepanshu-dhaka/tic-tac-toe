@@ -12,7 +12,7 @@ function Gameboard() {
 
     const getBoard = () => board;
 
-    console.log(getBoard())
+    // console.log(getBoard())
 
     const dropMark = function (row, column, playerMark) {
 
@@ -49,6 +49,7 @@ function GameController() {
     const playerTwoName = "Player Two";
 
     const game = Gameboard();
+    const board = game.getBoard();
 
     const players = [
         {
@@ -71,9 +72,39 @@ function GameController() {
 
     const getActivePlayer = () => activePlayer;
 
-    const playRound = function () {
+    const playRound = function (row, column) {
+        const activePlayer = getActivePlayer();
+        game.dropMark(row, column, activePlayer.mark);
+        switchPlayer();
 
     }
-
-
+    return { playRound, getActivePlayer, board };
 }
+
+const horizontalWinConditon = function (gameboard) {
+    const board = gameboard;
+
+    const arrs = board.map(function (row) {
+        return row.map((cell) => cell.getValue())
+    })
+
+    for (const arr of arrs) {
+        const allEqual = arr => arr.every(v => v === "X");
+
+        // if (allEqual(arr)) {
+        //     console.log("win");
+        //     break;
+        // }
+        console.log(allEqual(arr));
+    }
+    console.log("arr", arrs);
+}
+
+const gb = Gameboard();
+gb.dropMark(1, 0, "X")
+gb.dropMark(1, 1, "X")
+gb.dropMark(1, 2, "X")
+console.log("print board")
+gb.printBoard();
+const gameboard = gb.getBoard();
+horizontalWinConditon(gameboard)
