@@ -3,6 +3,7 @@ function Gameboard() {
     const columns = 3;
     const board = [];
 
+    //Make the board
     for (let i = 0; i < rows; i++) {
         board[i] = [];
         for (let j = 0; j < columns; j++) {
@@ -14,6 +15,7 @@ function Gameboard() {
 
     // console.log(getBoard())
 
+    //it changes the value of the board
     const dropMark = function (row, column, playerMark) {
 
         if (board[row][column].getValue() === 0) {
@@ -21,6 +23,7 @@ function Gameboard() {
         }
     }
 
+    //Print the board in console
     const printBoard = () => {
         const boardWithCellValues = board.map((row) =>
             row.map((cell) => cell.getValue())
@@ -41,7 +44,6 @@ function Cell() {
     return { getValue, addMark }
 }
 
-const game = Gameboard();
 
 
 function GameController() {
@@ -75,12 +77,16 @@ function GameController() {
     const playRound = function (row, column) {
         const activePlayer = getActivePlayer();
         game.dropMark(row, column, activePlayer.mark);
+        //win conditions
         switchPlayer();
 
     }
     return { playRound, getActivePlayer, board };
 }
 
+
+//check every row and getValue of each cell and compare them
+// if all the values in a single row are equal then its a win
 const horizontalWinConditon = function (gameboard) {
     const board = gameboard;
 
@@ -100,11 +106,18 @@ const horizontalWinConditon = function (gameboard) {
     console.log("arr", arrs);
 }
 
+
+//manually playing the game
+
 const gb = Gameboard();
+
+//dropping mark manually
 gb.dropMark(1, 0, "X")
 gb.dropMark(1, 1, "X")
 gb.dropMark(1, 2, "X")
 console.log("print board")
 gb.printBoard();
+
+
 const gameboard = gb.getBoard();
 horizontalWinConditon(gameboard)
