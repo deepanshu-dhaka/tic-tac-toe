@@ -74,6 +74,90 @@ function GameController() {
 
     const getActivePlayer = () => activePlayer;
 
+    const checkForWin = function (gameboard, activePlayer) {
+        const board = gameboard;
+        const activePlayerMark = activePlayer.mark;
+        const activePlayerName = activePlayer.name;
+
+        const arrs = board.map(function (row) {
+            return row.map((cell) => cell.getValue())
+        })
+
+        horizontalWinConditon(board, activePlayerMark, arrs, activePlayerName);
+        verticalWinCondition(board, activePlayerMark, arrs, activePlayerName);
+        diagonalWinCondition(board, activePlayerMark, arrs, activePlayerName);
+    }
+
+    //check every row and getValue of each cell and compare them
+    // if all the values in a single row are equal then its a win
+    const horizontalWinConditon = function (board, activePlayerMark, arrs, activePlayerName) {
+
+
+        for (const arr of arrs) {
+            const allEqual = arr => arr.every(v => v === activePlayerMark);
+
+            if (allEqual(arr)) {
+                console.log(activePlayerName + " horizontal win");
+                break;
+            }
+        }
+
+    }
+
+    const verticalWinCondition = function (board, activePlayerMark, arrs, activePlayerName) {
+        let columnsAsRows = [];
+        firstColumn = arrs.map(function (arr) {
+            return arr[0]
+        })
+
+        let secondColumn = arrs.map(function (arr) {
+            return arr[1]
+        })
+
+        let thirdColumn = arrs.map(function (arr) {
+            return arr[2]
+        })
+        columnsAsRows.push(firstColumn, secondColumn, thirdColumn);
+
+        for (const arr of columnsAsRows) {
+            const allEqual = arr => arr.every(v => v === activePlayerMark);
+
+            if (allEqual(arr)) {
+                console.log(activePlayerName + " vertical win");
+                break;
+            }
+        }
+        console.log("vertical", columnsAsRows)
+    }
+
+    const diagonalWinCondition = function (board, activePlayerMark, arrs, activePlayerName) {
+        let diagonal1 = [];
+        let diagonal2 = [];
+        for (let i = 0; i < 3; i++) {
+            for (let j = 0; j < 3; j++) {
+                if (i == j) {
+                    diagonal1.push(arrs[i][j])
+                }
+                if (i + j == 2) {
+                    diagonal2.push(arrs[i][j])
+                }
+            }
+        }
+
+        let diagonals = [];
+        diagonals.push(diagonal1, diagonal2)
+        console.log("diagonals", diagonals);
+
+        for (const diagonal of diagonals) {
+            const allEqual = diagonal => diagonal.every(v => v === activePlayerMark);
+
+            if (allEqual(diagonal)) {
+                console.log(activePlayerName + " diagonal win");
+                break;
+            }
+        }
+    }
+
     const playRound = function (row, column) {
         const activePlayer = getActivePlayer();
         console.log(activePlayer.name + " Plays " + activePlayer.mark)
@@ -81,116 +165,22 @@ function GameController() {
         console.log("Gameboard after " + activePlayer.name + " move's")
         game.printBoard();
         //win conditions
-        horizontalWinConditon(board, activePlayer);
-        verticalWinCondition(board, activePlayer);
-        diagonalWinConditions(board, activePlayer);
-
+        checkForWin(board, activePlayer);
         switchPlayer();
 
     }
     return { playRound, getActivePlayer, board };
 }
 
-
-//check every row and getValue of each cell and compare them
-// if all the values in a single row are equal then its a win
-const horizontalWinConditon = function (gameboard, activePlayer) {
-    const board = gameboard;
-    const activePlayerMark = activePlayer.mark;
-
-
-    const arrs = board.map(function (row) {
-        return row.map((cell) => cell.getValue())
-    })
-    // console.log(arrs, "dd")
-
-    for (const arr of arrs) {
-        const allEqual = arr => arr.every(v => v === activePlayerMark);
-
-        if (allEqual(arr)) {
-            console.log(activePlayer.name + " win");
-            break;
-        }
-        // console.log(allEqual(arr));
-    }
-    // console.log("arr", arrs);
-}
-
-const verticalWinCondition = function (gameboard, activePlayer) {
-    const board = gameboard;
-    const activePlayerMark = activePlayer.mark;
-
-    const arrs = board.map(function (row) {
-        return row.map((cell) => cell.getValue())
-    })
-
-    let columnsAsRows = [];
-    firstColumn = arrs.map(function (arr) {
-        return arr[0]
-    })
-
-    let secondColumn = arrs.map(function (arr) {
-        return arr[1]
-    })
-
-    let thirdColumn = arrs.map(function (arr) {
-        return arr[2]
-    })
-    columnsAsRows.push(firstColumn, secondColumn, thirdColumn);
-
-    for (const arr of columnsAsRows) {
-        const allEqual = arr => arr.every(v => v === activePlayerMark);
-
-        if (allEqual(arr)) {
-            console.log(activePlayer.name + " vertical win");
-            break;
-        }
-    }
-    console.log("vertical", columnsAsRows)
-}
-
-function diagonalWinConditions(gameboard, activePlayer) {
-    const board = gameboard;
-    const activePlayerMark = activePlayer.mark;
-
-    const arrs = board.map(function (row) {
-        return row.map((cell) => cell.getValue())
-    })
-
-    let diagonal1 = [];
-    let diagonal2 = [];
-    for (let i = 0; i < 3; i++) {
-        for (let j = 0; j < 3; j++) {
-            if (i == j) {
-                diagonal1.push(arrs[i][j])
-            }
-            if (i + j == 2) {
-                diagonal2.push(arrs[i][j])
-            }
-        }
-    }
-
-    let diagonals = [];
-    diagonals.push(diagonal1, diagonal2)
-    console.log("diagonals", diagonals);
-
-    for (const diagonal of diagonals) {
-        const allEqual = diagonal => diagonal.every(v => v === activePlayerMark);
-
-        if (allEqual(diagonal)) {
-            console.log(activePlayer.name + " diagonal win");
-            break;
-        }
-    }
-}
 //manually playing the game
 
 const gc = GameController();
 gc.playRound(0, 0);
-gc.playRound(1, 2);
+gc.playRound(1, 0);
+gc.playRound(0, 1);
 gc.playRound(1, 1);
-gc.playRound(2, 1);
 gc.playRound(2, 2);
+gc.playRound(1, 2);
 
 
 // const gameboard = gb.getBoard();
