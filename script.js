@@ -83,6 +83,7 @@ function GameController() {
         //win conditions
         horizontalWinConditon(board, activePlayer);
         verticalWinCondition(board, activePlayer);
+        diagonalWinConditions(board, activePlayer);
 
         switchPlayer();
 
@@ -148,14 +149,48 @@ const verticalWinCondition = function (gameboard, activePlayer) {
     console.log("vertical", columnsAsRows)
 }
 
+function diagonalWinConditions(gameboard, activePlayer) {
+    const board = gameboard;
+    const activePlayerMark = activePlayer.mark;
+
+    const arrs = board.map(function (row) {
+        return row.map((cell) => cell.getValue())
+    })
+
+    let diagonal1 = [];
+    let diagonal2 = [];
+    for (let i = 0; i < 3; i++) {
+        for (let j = 0; j < 3; j++) {
+            if (i == j) {
+                diagonal1.push(arrs[i][j])
+            }
+            if (i + j == 2) {
+                diagonal2.push(arrs[i][j])
+            }
+        }
+    }
+
+    let diagonals = [];
+    diagonals.push(diagonal1, diagonal2)
+    console.log("diagonals", diagonals);
+
+    for (const diagonal of diagonals) {
+        const allEqual = diagonal => diagonal.every(v => v === activePlayerMark);
+
+        if (allEqual(diagonal)) {
+            console.log(activePlayer.name + " diagonal win");
+            break;
+        }
+    }
+}
 //manually playing the game
 
 const gc = GameController();
 gc.playRound(0, 0);
 gc.playRound(1, 2);
-gc.playRound(1, 0);
+gc.playRound(1, 1);
+gc.playRound(2, 1);
 gc.playRound(2, 2);
-gc.playRound(2, 0);
 
 
 // const gameboard = gb.getBoard();
