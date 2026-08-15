@@ -56,11 +56,11 @@ function GameController() {
     const players = [
         {
             name: playerOneName,
-            mark: 1,
+            mark: "X",
         },
         {
             name: playerTwoName,
-            mark: 2,
+            mark: "O",
         },
     ];
 
@@ -76,8 +76,13 @@ function GameController() {
 
     const playRound = function (row, column) {
         const activePlayer = getActivePlayer();
+        console.log(activePlayer.name + " Plays " + activePlayer.mark)
         game.dropMark(row, column, activePlayer.mark);
+        console.log("Gameboard after " + activePlayer.name + " move's")
+        game.printBoard();
         //win conditions
+        horizontalWinConditon(board, activePlayer);
+
         switchPlayer();
 
     }
@@ -87,37 +92,37 @@ function GameController() {
 
 //check every row and getValue of each cell and compare them
 // if all the values in a single row are equal then its a win
-const horizontalWinConditon = function (gameboard) {
+const horizontalWinConditon = function (gameboard, activePlayer) {
     const board = gameboard;
+    const activePlayerMark = activePlayer.mark;
+
 
     const arrs = board.map(function (row) {
         return row.map((cell) => cell.getValue())
     })
 
     for (const arr of arrs) {
-        const allEqual = arr => arr.every(v => v === "X");
+        const allEqual = arr => arr.every(v => v === activePlayerMark);
 
-        // if (allEqual(arr)) {
-        //     console.log("win");
-        //     break;
-        // }
-        console.log(allEqual(arr));
+        if (allEqual(arr)) {
+            console.log(activePlayer.name + " win");
+            break;
+        }
+        // console.log(allEqual(arr));
     }
-    console.log("arr", arrs);
+    // console.log("arr", arrs);
 }
 
 
 //manually playing the game
 
-const gb = Gameboard();
-
-//dropping mark manually
-gb.dropMark(1, 0, "X")
-gb.dropMark(1, 1, "X")
-gb.dropMark(1, 2, "X")
-console.log("print board")
-gb.printBoard();
+const gc = GameController();
+gc.playRound(0, 0);
+gc.playRound(1, 2);
+gc.playRound(0, 1);
+gc.playRound(2, 2);
+gc.playRound(0, 2);
 
 
-const gameboard = gb.getBoard();
-horizontalWinConditon(gameboard)
+console.log("rel")
+// const gameboard = gb.getBoard();
