@@ -82,6 +82,7 @@ function GameController() {
         game.printBoard();
         //win conditions
         horizontalWinConditon(board, activePlayer);
+        verticalWinCondition(board, activePlayer);
 
         switchPlayer();
 
@@ -100,6 +101,7 @@ const horizontalWinConditon = function (gameboard, activePlayer) {
     const arrs = board.map(function (row) {
         return row.map((cell) => cell.getValue())
     })
+    // console.log(arrs, "dd")
 
     for (const arr of arrs) {
         const allEqual = arr => arr.every(v => v === activePlayerMark);
@@ -113,16 +115,47 @@ const horizontalWinConditon = function (gameboard, activePlayer) {
     // console.log("arr", arrs);
 }
 
+const verticalWinCondition = function (gameboard, activePlayer) {
+    const board = gameboard;
+    const activePlayerMark = activePlayer.mark;
+
+    const arrs = board.map(function (row) {
+        return row.map((cell) => cell.getValue())
+    })
+
+    let columnsAsRows = [];
+    firstColumn = arrs.map(function (arr) {
+        return arr[0]
+    })
+
+    let secondColumn = arrs.map(function (arr) {
+        return arr[1]
+    })
+
+    let thirdColumn = arrs.map(function (arr) {
+        return arr[2]
+    })
+    columnsAsRows.push(firstColumn, secondColumn, thirdColumn);
+
+    for (const arr of columnsAsRows) {
+        const allEqual = arr => arr.every(v => v === activePlayerMark);
+
+        if (allEqual(arr)) {
+            console.log(activePlayer.name + " vertical win");
+            break;
+        }
+    }
+    console.log("vertical", columnsAsRows)
+}
 
 //manually playing the game
 
 const gc = GameController();
 gc.playRound(0, 0);
 gc.playRound(1, 2);
-gc.playRound(0, 1);
+gc.playRound(1, 0);
 gc.playRound(2, 2);
-gc.playRound(0, 2);
+gc.playRound(2, 0);
 
 
-console.log("rel")
 // const gameboard = gb.getBoard();
