@@ -79,13 +79,17 @@ function GameController() {
         const activePlayerMark = activePlayer.mark;
         const activePlayerName = activePlayer.name;
 
+        // arrs is the 2d array matrix of the gameboard of size 3 by 3
         const arrs = board.map(function (row) {
             return row.map((cell) => cell.getValue())
         })
 
-        horizontalWinConditon(board, activePlayerMark, arrs, activePlayerName);
-        verticalWinCondition(board, activePlayerMark, arrs, activePlayerName);
-        diagonalWinCondition(board, activePlayerMark, arrs, activePlayerName);
+        if (horizontalWinConditon(board, activePlayerMark, arrs, activePlayerName) || verticalWinCondition(board, activePlayerMark, arrs, activePlayerName) || diagonalWinCondition(board, activePlayerMark, arrs, activePlayerName)) {
+            console.log("checking complete");
+            return true;
+        }
+
+
     }
 
     //check every row and getValue of each cell and compare them
@@ -98,7 +102,7 @@ function GameController() {
 
             if (allEqual(arr)) {
                 console.log(activePlayerName + " horizontal win");
-                break;
+                return true;
             }
         }
 
@@ -124,7 +128,7 @@ function GameController() {
 
             if (allEqual(arr)) {
                 console.log(activePlayerName + " vertical win");
-                break;
+                return true;
             }
         }
         console.log("vertical", columnsAsRows)
@@ -153,7 +157,7 @@ function GameController() {
 
             if (allEqual(diagonal)) {
                 console.log(activePlayerName + " diagonal win");
-                break;
+                return true;
             }
         }
     }
@@ -165,7 +169,10 @@ function GameController() {
         console.log("Gameboard after " + activePlayer.name + " move's")
         game.printBoard();
         //win conditions
-        checkForWin(board, activePlayer);
+        if (checkForWin(board, activePlayer)) {
+            console.log("Game over!")
+            return
+        }
         switchPlayer();
 
     }
@@ -181,6 +188,7 @@ gc.playRound(0, 1);
 gc.playRound(1, 1);
 gc.playRound(2, 2);
 gc.playRound(1, 2);
+gc.playRound(2, 1);
 
 
 // const gameboard = gb.getBoard();
