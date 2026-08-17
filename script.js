@@ -85,6 +85,31 @@ function GameController() {
 
     const getActivePlayer = () => activePlayer;
 
+    const checkForTies = function (gameboard, activePlayer) {
+        const board = gameboard;
+        const activePlayerMark = activePlayer.mark;
+        const activePlayerName = activePlayer.name;
+
+        // arrs is the 2d array matrix of the gameboard of size 3 by 3
+        const arrs = board.map(function (row) {
+            return row.map((cell) => cell.getValue())
+        })
+
+        // check if there are cells within gamebaord with empty values
+        // if there is not any empty values cell left then all the cells are filled
+        // which means no has won and it is a tie. Because if somebody have won
+        // then game would have terminated or ended.
+        let isCellEmpty;
+        console.log(isCellEmpty)
+        for (const arr of arrs) {
+            isCellEmpty = arr.some(v => v === "");
+        }
+
+        if (!isCellEmpty) {
+            return true;
+        }
+    }
+
     const checkForWin = function (gameboard, activePlayer) {
         const board = gameboard;
         const activePlayerMark = activePlayer.mark;
@@ -100,7 +125,6 @@ function GameController() {
             console.log("checking complete");
             return true;
         }
-
 
     }
 
@@ -181,16 +205,15 @@ function GameController() {
         game.printBoard();
         //win conditions
         if (checkForWin(board, activePlayer)) {
-            console.log("Game over!")
             return true;
         }
 
+        if (checkForTies(board, activePlayer)) {
+            return "tie";
+        }
         if (!isCellAlreadyTaken) {
             switchPlayer();
         }
-
-
-
     }
     return { playRound, getActivePlayer, game };
 }
@@ -240,12 +263,15 @@ function screenController() {
 
         isGameOver = gc.playRound(selectedRow, selectedColumn);
         updateScreen();
-        if (isGameOver) {
+        if (isGameOver === true) {
             gameOverDiv.textContent = `${gc.getActivePlayer().name} won the game! Refresh to play again`;
             playerTurnDiv.textContent = "";
             makeRefreshButton();
-
-
+        }
+        if (isGameOver === "tie") {
+            gameOverDiv.textContent = "Its a tie! Refresh to play again";
+            playerTurnDiv.textContent = "";
+            makeRefreshButton();
         }
     }
     function makeRefreshButton() {
