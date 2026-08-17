@@ -236,7 +236,6 @@ function screenController() {
     }
     function handleClick(event) {
         if (isGameOver) {
-            gameOverDiv.textContent = "Game Over! Refresh to play again"
             return;
         }
         const selectedRow = event.target.dataset.row;
@@ -246,7 +245,7 @@ function screenController() {
 
         isGameOver = gc.playRound(selectedRow, selectedColumn);
         if (isGameOver) {
-            gameOverDiv.textContent = "Game Over! Refresh to play again"
+            gameOverDiv.textContent = `${gc.getActivePlayer().name} won the game! Refresh to play again`;
 
         }
         updateScreen();
