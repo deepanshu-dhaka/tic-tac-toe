@@ -180,6 +180,7 @@ function GameController() {
     let count = 0;
     const playRound = function (row, column) {
         count += 1;
+        console.log(count)
         const activePlayer = getActivePlayer();
         console.log(activePlayer.name + " Plays " + activePlayer.mark)
         game.dropMark(row, column, activePlayer.mark);
@@ -188,7 +189,7 @@ function GameController() {
         //win conditions
         if (checkForWin(board, activePlayer)) {
             console.log("Game over!")
-            return
+            return true;
         }
         switchPlayer();
         if (count === 9) {
@@ -205,6 +206,8 @@ function screenController() {
     const gc = GameController();
     const boardDiv = document.querySelector(".board");
     const playerTurnDiv = document.querySelector(".turn");
+    const gameOverDiv = document.querySelector(".game-over");
+    let isGameOver = false;
 
     console.log(gc.game.getBoard())
     console.log(boardDiv)
@@ -232,12 +235,20 @@ function screenController() {
 
     }
     function handleClick(event) {
+        if (isGameOver) {
+            gameOverDiv.textContent = "Game Over! Refresh to play again"
+            return;
+        }
         const selectedRow = event.target.dataset.row;
         const selectedColumn = event.target.dataset.column;
 
         if (!selectedColumn || !selectedRow) return;
 
-        gc.playRound(selectedRow, selectedColumn);
+        isGameOver = gc.playRound(selectedRow, selectedColumn);
+        if (isGameOver) {
+            gameOverDiv.textContent = "Game Over! Refresh to play again"
+
+        }
         updateScreen();
     }
 
