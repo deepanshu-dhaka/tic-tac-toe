@@ -289,17 +289,3 @@ function screenController() {
 
 screenController()
 
-//manually playing the game
-
-// const gc = GameController();
-// gc.playRound(0, 0);
-// gc.playRound(0, 0);
-// gc.playRound(1, 0);
-// gc.playRound(0, 1);
-// gc.playRound(1, 1);
-// gc.playRound(2, 2);
-// gc.playRound(1, 2);
-// gc.playRound(2, 1);
-
-
-// const gameboard = gb.getBoard();
