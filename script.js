@@ -17,7 +17,9 @@ function Gameboard() {
 
     //it changes the value of the board
     const dropMark = function (row, column, playerMark) {
-
+        // default value of the cells are zero
+        // if value of the cell in which player is trying to put their marker is not zero
+        // then it means its already filled, so we tell user to place their marker elsewhere
         let flag = true;
         count = 0
         while (flag) {
@@ -97,6 +99,7 @@ function GameController() {
             return row.map((cell) => cell.getValue())
         })
 
+        // if either of three functions return true then one of the player have won the match and this func will return true
         if (horizontalWinConditon(board, activePlayerMark, arrs, activePlayerName) || verticalWinCondition(board, activePlayerMark, arrs, activePlayerName) || diagonalWinCondition(board, activePlayerMark, arrs, activePlayerName)) {
             console.log("checking complete");
             return true;
@@ -189,12 +192,12 @@ function GameController() {
         }
         switchPlayer();
         if (count === 9) {
-            console.log("Game Over! It's a tie, no one won")
+            console.log("Game Over! It's a tie, no one won");
             return;
         }
 
     }
-    return { playRound, getActivePlayer, board };
+    return { playRound, getActivePlayer, game };
 }
 
 //manually playing the game
