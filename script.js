@@ -22,7 +22,7 @@ function Gameboard() {
         // then it means its already filled, so we tell user to place their marker elsewhere
         let isCellAlreadyTaken = false;
 
-        if (board[row][column].getValue() === 0) {
+        if (board[row][column].getValue() === "") {
             board[row][column].addMark(playerMark)
 
         }
@@ -46,7 +46,7 @@ function Gameboard() {
 }
 
 function Cell() {
-    let value = 0;
+    let value = "";
 
     const getValue = () => value;
 
