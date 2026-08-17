@@ -18,8 +18,21 @@ function Gameboard() {
     //it changes the value of the board
     const dropMark = function (row, column, playerMark) {
 
-        if (board[row][column].getValue() === 0) {
-            board[row][column].addMark(playerMark)
+        let flag = true;
+        count = 0
+        while (flag) {
+            count = count + 1;
+            if (board[row][column].getValue() === 0) {
+                board[row][column].addMark(playerMark)
+                flag = false;
+            }
+            else {
+                console.log("This cell is already filled, please choose another cell");
+            }
+            if (count > 10) {
+                break;
+            }
+
         }
     }
 
@@ -161,8 +174,9 @@ function GameController() {
             }
         }
     }
-
+    let count = 0;
     const playRound = function (row, column) {
+        count += 1;
         const activePlayer = getActivePlayer();
         console.log(activePlayer.name + " Plays " + activePlayer.mark)
         game.dropMark(row, column, activePlayer.mark);
@@ -174,6 +188,10 @@ function GameController() {
             return
         }
         switchPlayer();
+        if (count === 9) {
+            console.log("Game Over! It's a tie, no one won")
+            return;
+        }
 
     }
     return { playRound, getActivePlayer, board };
@@ -182,6 +200,7 @@ function GameController() {
 //manually playing the game
 
 const gc = GameController();
+gc.playRound(0, 0);
 gc.playRound(0, 0);
 gc.playRound(1, 0);
 gc.playRound(0, 1);
