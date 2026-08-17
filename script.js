@@ -20,22 +20,18 @@ function Gameboard() {
         // default value of the cells are zero
         // if value of the cell in which player is trying to put their marker is not zero
         // then it means its already filled, so we tell user to place their marker elsewhere
-        let flag = true;
-        count = 0
-        while (flag) {
-            count = count + 1;
-            if (board[row][column].getValue() === 0) {
-                board[row][column].addMark(playerMark)
-                flag = false;
-            }
-            else {
-                console.log("This cell is already filled, please choose another cell");
-            }
-            if (count > 10) {
-                break;
-            }
+        let isCellAlreadyTaken = false;
+
+        if (board[row][column].getValue() === 0) {
+            board[row][column].addMark(playerMark)
 
         }
+        else {
+            isCellAlreadyTaken = true;
+            return isCellAlreadyTaken;
+        }
+
+
     }
 
     //Print the board in console
@@ -177,13 +173,10 @@ function GameController() {
             }
         }
     }
-    let count = 0;
     const playRound = function (row, column) {
-        count += 1;
-        console.log(count)
         const activePlayer = getActivePlayer();
         console.log(activePlayer.name + " Plays " + activePlayer.mark)
-        game.dropMark(row, column, activePlayer.mark);
+        let isCellAlreadyTaken = game.dropMark(row, column, activePlayer.mark);
         console.log("Gameboard after " + activePlayer.name + " move's")
         game.printBoard();
         //win conditions
@@ -191,11 +184,12 @@ function GameController() {
             console.log("Game over!")
             return true;
         }
-        switchPlayer();
-        if (count === 9) {
-            console.log("Game Over! It's a tie, no one won");
-            return;
+
+        if (!isCellAlreadyTaken) {
+            switchPlayer();
         }
+
+
 
     }
     return { playRound, getActivePlayer, game };
@@ -244,11 +238,12 @@ function screenController() {
         if (!selectedColumn || !selectedRow) return;
 
         isGameOver = gc.playRound(selectedRow, selectedColumn);
+        updateScreen();
         if (isGameOver) {
             gameOverDiv.textContent = `${gc.getActivePlayer().name} won the game! Refresh to play again`;
+            playerTurnDiv.textContent = ""
 
         }
-        updateScreen();
     }
 
     boardDiv.addEventListener("click", handleClick)
