@@ -201,6 +201,7 @@ function screenController() {
     const boardDiv = document.querySelector(".board");
     const playerTurnDiv = document.querySelector(".turn");
     const gameOverDiv = document.querySelector(".game-over");
+    const containerDiv = document.querySelector(".container")
     let isGameOver = false;
 
     console.log(gc.game.getBoard())
@@ -241,9 +242,19 @@ function screenController() {
         updateScreen();
         if (isGameOver) {
             gameOverDiv.textContent = `${gc.getActivePlayer().name} won the game! Refresh to play again`;
-            playerTurnDiv.textContent = ""
+            playerTurnDiv.textContent = "";
+            makeRefreshButton();
+
 
         }
+    }
+    function makeRefreshButton() {
+        const refreshBtn = document.createElement("button");
+        refreshBtn.classList.add("refreshBtn");
+        refreshBtn.textContent = "Refresh"
+        containerDiv.appendChild(refreshBtn);
+
+        refreshBtn.addEventListener("click", () => window.location.reload())
     }
 
     boardDiv.addEventListener("click", handleClick)
