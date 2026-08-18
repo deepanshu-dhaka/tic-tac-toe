@@ -1,4 +1,4 @@
-const Gameboard = (() => {
+function Gameboard() {
     const rows = 3;
     const columns = 3;
     const board = [];
@@ -43,9 +43,9 @@ const Gameboard = (() => {
     };
 
     return { getBoard, dropMark, printBoard };
-})
+}
 
-const Cell = (() => {
+function Cell() {
     let value = "";
 
     const getValue = () => value;
@@ -53,11 +53,11 @@ const Cell = (() => {
     const addMark = (playerMark) => value = playerMark;
 
     return { getValue, addMark }
-})
+}
 
 
 
-const GameController = (() => {
+function GameController() {
     const playerOneName = "Player One";
     const playerTwoName = "Player Two";
 
@@ -94,6 +94,7 @@ const GameController = (() => {
         const arrs = board.map(function (row) {
             return row.map((cell) => cell.getValue())
         })
+        console.log("ties array", arrs)
 
         // check if there are cells within gamebaord with empty values
         // if there is not any empty values cell left then all the cells are filled
@@ -101,9 +102,19 @@ const GameController = (() => {
         // then game would have terminated or ended.
         let isCellEmpty;
         console.log(isCellEmpty)
-        for (const arr of arrs) {
-            isCellEmpty = arr.some(v => v === "");
+        // for (const arr of arrs) {
+        //     console.log(arr)
+        //     isCellEmpty = arr.some(v => v === "");
+        // }
+        let newarr = []
+
+        for (let i = 0; i < 3; i++) {
+            for (let j = 0; j < 3; j++) {
+                newarr.push(arrs[i][j])
+            }
         }
+        isCellEmpty = newarr.some(v => v === "");
+        console.log(isCellEmpty, "iscellempty")
 
         if (!isCellEmpty) {
             return true;
@@ -216,10 +227,10 @@ const GameController = (() => {
         }
     }
     return { playRound, getActivePlayer, game, players };
-})
+}
 
 
-const screenController = (() => {
+function screenController() {
     const gc = GameController();
     const boardDiv = document.querySelector(".board");
     const playerTurnDiv = document.querySelector(".turn");
@@ -314,7 +325,7 @@ const screenController = (() => {
         setPlayerNames();
 
     }
-})
+}
 
 screenController()
 
