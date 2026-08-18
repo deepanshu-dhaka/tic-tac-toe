@@ -36,3 +36,13 @@ body {
   background: #fcf2e5;
   cursor: pointer;
 }
+
+.enter-player-name-btn,
+.refreshBtn {
+  color: white;
+  background-color: #5e3122;
+  border: none;
+  border-radius: 19px;
+  padding: 10px 20px;
+  font-size: 16px;
+}
