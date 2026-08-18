@@ -1,4 +1,4 @@
-function Gameboard() {
+const Gameboard = (() => {
     const rows = 3;
     const columns = 3;
     const board = [];
@@ -43,9 +43,9 @@ function Gameboard() {
     };
 
     return { getBoard, dropMark, printBoard };
-}
+});
 
-function Cell() {
+const Cell = (() => {
     let value = "";
 
     const getValue = () => value;
@@ -53,11 +53,11 @@ function Cell() {
     const addMark = (playerMark) => value = playerMark;
 
     return { getValue, addMark }
-}
+});
 
 
 
-function GameController() {
+const GameController = (() => {
     const playerOneName = "Player One";
     const playerTwoName = "Player Two";
 
@@ -227,10 +227,10 @@ function GameController() {
         }
     }
     return { playRound, getActivePlayer, game, players };
-}
+});
 
 
-function screenController() {
+const screenController = (() => {
     const gc = GameController();
     const boardDiv = document.querySelector(".board");
     const playerTurnDiv = document.querySelector(".turn");
@@ -325,7 +325,7 @@ function screenController() {
         setPlayerNames();
 
     }
-}
+});
 
 screenController()
 
