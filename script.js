@@ -264,6 +264,9 @@ const screenController = (() => {
 
     }
     function handleBoardClick(event) {
+        if (!isEnterPlayerNamesBtnCalled()) {
+            enterPlayerNamesBtn.remove();
+        }
         if (isGameOver) {
             return;
         }
