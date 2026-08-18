@@ -215,7 +215,7 @@ function GameController() {
             switchPlayer();
         }
     }
-    return { playRound, getActivePlayer, game };
+    return { playRound, getActivePlayer, game, players };
 }
 
 
@@ -252,7 +252,7 @@ function screenController() {
         })
 
     }
-    function handleClick(event) {
+    function handleBoardClick(event) {
         if (isGameOver) {
             return;
         }
@@ -283,9 +283,39 @@ function screenController() {
         refreshBtn.addEventListener("click", () => window.location.reload())
     }
 
-    boardDiv.addEventListener("click", handleClick)
+    boardDiv.addEventListener("click", handleBoardClick)
     updateScreen();
+
+    function isEnterPlayerNamesBtnCalled() {
+        let flag = false;
+        return flag;
+    }
+
+    function setPlayerNames() {
+        let playerOneName = prompt("Enter the name of Player One:");
+        let playerTwoName = prompt("Enter the name of Player two:");
+        if (playerOneName === null || playerOneName === "") {
+            playerOneName = "Player One"
+        }
+        if (playerTwoName === null || playerTwoName === "") {
+            playerTwoName = "Player Two"
+        }
+        gc.players[0].name = playerOneName;
+        gc.players[1].name = playerTwoName;
+        playerTurnDiv.textContent = `${playerOneName}'s turn`;
+        enterPlayerNamesBtn.remove();
+    }
+
+    const enterPlayerNamesBtn = document.querySelector(".enter-player-name-btn");
+    enterPlayerNamesBtn.addEventListener("click", handleClick)
+    function handleClick() {
+        let isEnterPlayerNamesBtnBtnClicked = isEnterPlayerNamesBtnCalled();
+        isEnterPlayerNamesBtnBtnClicked = true;
+        setPlayerNames();
+
+    }
 }
 
 screenController()
+
 
