@@ -1,5 +1,20 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+/* Remove default margin */
+*:not(dialog) {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  height: 100%;
+}
 body {
   background-color: #f7f4ed;
+  height: 100%;
 }
 
 .game-heading {
@@ -12,6 +27,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  height: 100%;
 }
 
 .board {
