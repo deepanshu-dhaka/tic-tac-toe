@@ -1,0 +1,45 @@
+@font-face {
+    font-family: 'The Neue';
+    src: url('TheNeue-Black.woff2') format('woff2'),
+        url('TheNeue-Black.woff') format('woff');
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Fanwood';
+    src: url('Fanwood-Italic.woff2') format('woff2'),
+        url('Fanwood-Italic.woff') format('woff');
+    font-weight: normal;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Fanwood Text';
+    src: url('FanwoodText-Italic.woff2') format('woff2'),
+        url('FanwoodText-Italic.woff') format('woff');
+    font-weight: normal;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Fanwood Text';
+    src: url('FanwoodText.woff2') format('woff2'),
+        url('FanwoodText.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Fanwood';
+    src: url('Fanwood.woff2') format('woff2'),
+        url('Fanwood.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
