@@ -1,3 +1,13 @@
+const Cell = (() => {
+    let value = "";
+
+    const getValue = () => value;
+
+    const addMark = (playerMark) => value = playerMark;
+
+    return { getValue, addMark }
+});
+
 const Gameboard = (() => {
     const rows = 3;
     const columns = 3;
@@ -43,17 +53,9 @@ const Gameboard = (() => {
     };
 
     return { getBoard, dropMark, printBoard };
-});
+})();
 
-const Cell = (() => {
-    let value = "";
 
-    const getValue = () => value;
-
-    const addMark = (playerMark) => value = playerMark;
-
-    return { getValue, addMark }
-});
 
 
 
@@ -61,8 +63,8 @@ const GameController = (() => {
     const playerOneName = "Player One";
     const playerTwoName = "Player Two";
 
-    const game = Gameboard();
-    const board = game.getBoard();
+    // const game = Gameboard;
+    const board = Gameboard.getBoard();
 
     const players = [
         {
@@ -211,9 +213,9 @@ const GameController = (() => {
     const playRound = function (row, column) {
         const activePlayer = getActivePlayer();
         console.log(activePlayer.name + " Plays " + activePlayer.mark)
-        let isCellAlreadyTaken = game.dropMark(row, column, activePlayer.mark);
+        let isCellAlreadyTaken = Gameboard.dropMark(row, column, activePlayer.mark);
         console.log("Gameboard after " + activePlayer.name + " move's")
-        game.printBoard();
+        Gameboard.printBoard();
         //win conditions
         if (checkForWin(board, activePlayer)) {
             return true;
@@ -226,7 +228,7 @@ const GameController = (() => {
             switchPlayer();
         }
     }
-    return { playRound, getActivePlayer, game, players };
+    return { playRound, getActivePlayer, Gameboard, players };
 });
 
 
@@ -238,13 +240,13 @@ const screenController = (() => {
     const containerDiv = document.querySelector(".container")
     let isGameOver = false;
 
-    console.log(gc.game.getBoard())
+    console.log(gc.Gameboard.getBoard())
     console.log(boardDiv)
     console.log(playerTurnDiv);
 
     const updateScreen = function () {
         boardDiv.textContent = ""
-        let gameboard = gc.game.getBoard();
+        let gameboard = gc.Gameboard.getBoard();
 
         const activePlayer = gc.getActivePlayer();
 
