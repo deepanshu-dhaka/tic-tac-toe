@@ -330,8 +330,8 @@ const screenController = (() => {
         setPlayerNames();
 
     }
-});
+})();
 
-screenController()
+// screenController()
 
 
