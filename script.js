@@ -229,26 +229,26 @@ const GameController = (() => {
         }
     }
     return { playRound, getActivePlayer, Gameboard, players };
-});
+})();
 
 
 const screenController = (() => {
-    const gc = GameController();
+
     const boardDiv = document.querySelector(".board");
     const playerTurnDiv = document.querySelector(".turn");
     const gameOverDiv = document.querySelector(".game-over");
     const containerDiv = document.querySelector(".container")
     let isGameOver = false;
 
-    console.log(gc.Gameboard.getBoard())
+    console.log(GameController.Gameboard.getBoard())
     console.log(boardDiv)
     console.log(playerTurnDiv);
 
     const updateScreen = function () {
         boardDiv.textContent = ""
-        let gameboard = gc.Gameboard.getBoard();
+        let gameboard = GameController.Gameboard.getBoard();
 
-        const activePlayer = gc.getActivePlayer();
+        const activePlayer = GameController.getActivePlayer();
 
         playerTurnDiv.textContent = `${activePlayer.name}'s turn`;
 
@@ -277,10 +277,10 @@ const screenController = (() => {
 
         if (!selectedColumn || !selectedRow) return;
 
-        isGameOver = gc.playRound(selectedRow, selectedColumn);
+        isGameOver = GameController.playRound(selectedRow, selectedColumn);
         updateScreen();
         if (isGameOver === true) {
-            gameOverDiv.textContent = `${gc.getActivePlayer().name} won the game! Refresh to play again`;
+            gameOverDiv.textContent = `${GameController.getActivePlayer().name} won the game! Refresh to play again`;
             playerTurnDiv.textContent = "";
             makeRefreshButton();
         }
@@ -316,8 +316,8 @@ const screenController = (() => {
         if (playerTwoName === null || playerTwoName === "") {
             playerTwoName = "Player Two"
         }
-        gc.players[0].name = playerOneName;
-        gc.players[1].name = playerTwoName;
+        GameController.players[0].name = playerOneName;
+        GameController.players[1].name = playerTwoName;
         playerTurnDiv.textContent = `${playerOneName}'s turn`;
         enterPlayerNamesBtn.remove();
     }
