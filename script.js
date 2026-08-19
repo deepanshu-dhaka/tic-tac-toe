@@ -23,8 +23,6 @@ const Gameboard = (() => {
 
     const getBoard = () => board;
 
-    // console.log(getBoard())
-
     //it changes the value of the board
     const dropMark = function (row, column, playerMark) {
         // default value of the cells are zero
@@ -49,7 +47,6 @@ const Gameboard = (() => {
         const boardWithCellValues = board.map((row) =>
             row.map((cell) => cell.getValue())
         );
-        console.log(boardWithCellValues);
     };
 
     return { getBoard, dropMark, printBoard };
@@ -96,18 +93,12 @@ const GameController = (() => {
         const arrs = board.map(function (row) {
             return row.map((cell) => cell.getValue())
         })
-        console.log("ties array", arrs)
 
         // check if there are cells within gamebaord with empty values
         // if there is not any empty values cell left then all the cells are filled
         // which means no has won and it is a tie. Because if somebody have won
         // then game would have terminated or ended.
         let isCellEmpty;
-        console.log(isCellEmpty)
-        // for (const arr of arrs) {
-        //     console.log(arr)
-        //     isCellEmpty = arr.some(v => v === "");
-        // }
         let newarr = []
 
         for (let i = 0; i < 3; i++) {
@@ -116,8 +107,6 @@ const GameController = (() => {
             }
         }
         isCellEmpty = newarr.some(v => v === "");
-        console.log(isCellEmpty, "iscellempty")
-
         if (!isCellEmpty) {
             return true;
         }
@@ -135,7 +124,6 @@ const GameController = (() => {
 
         // if either of three functions return true then one of the player have won the match and this func will return true
         if (horizontalWinConditon(board, activePlayerMark, arrs, activePlayerName) || verticalWinCondition(board, activePlayerMark, arrs, activePlayerName) || diagonalWinCondition(board, activePlayerMark, arrs, activePlayerName)) {
-            console.log("checking complete");
             return true;
         }
 
@@ -150,7 +138,6 @@ const GameController = (() => {
             const allEqual = arr => arr.every(v => v === activePlayerMark);
 
             if (allEqual(arr)) {
-                console.log(activePlayerName + " horizontal win");
                 return true;
             }
         }
@@ -176,11 +163,9 @@ const GameController = (() => {
             const allEqual = arr => arr.every(v => v === activePlayerMark);
 
             if (allEqual(arr)) {
-                console.log(activePlayerName + " vertical win");
                 return true;
             }
         }
-        console.log("vertical", columnsAsRows)
     }
 
     const diagonalWinCondition = function (board, activePlayerMark, arrs, activePlayerName) {
@@ -199,22 +184,18 @@ const GameController = (() => {
 
         let diagonals = [];
         diagonals.push(diagonal1, diagonal2)
-        console.log("diagonals", diagonals);
 
         for (const diagonal of diagonals) {
             const allEqual = diagonal => diagonal.every(v => v === activePlayerMark);
 
             if (allEqual(diagonal)) {
-                console.log(activePlayerName + " diagonal win");
                 return true;
             }
         }
     }
     const playRound = function (row, column) {
         const activePlayer = getActivePlayer();
-        console.log(activePlayer.name + " Plays " + activePlayer.mark)
         let isCellAlreadyTaken = Gameboard.dropMark(row, column, activePlayer.mark);
-        console.log("Gameboard after " + activePlayer.name + " move's")
         Gameboard.printBoard();
         //win conditions
         if (checkForWin(board, activePlayer)) {
@@ -240,9 +221,6 @@ const screenController = (() => {
     const containerDiv = document.querySelector(".container")
     let isGameOver = false;
 
-    console.log(GameController.Gameboard.getBoard())
-    console.log(boardDiv)
-    console.log(playerTurnDiv);
 
     const updateScreen = function () {
         boardDiv.textContent = ""
